@@ -1,7 +1,7 @@
 describe('Product', function(){   
     context('720p resolution', () => {
         beforeEach(() => {
-          // browser with a 720p monitor
+          // Browser with a 720p monitor
           cy.viewport(1280, 720)
         })
 
@@ -31,7 +31,7 @@ describe('Product', function(){
             cy.visit('https://www.mercadolibre.com.ec/');
             cy.get('a[href*="animales-y-mascotas"]')
             .should('have.attr', 'href').then((href) => {
-                cy.log(href);
+                cy.logFormat(href);
                 cy.visit(href)
             });
             cy.get('.categories > :nth-child(2) > :nth-child(1) > ul > :nth-child(2) > a').click();
@@ -39,23 +39,19 @@ describe('Product', function(){
             cy.get('[data-testid=Maximum-price]').type('60');
             cy.get('.ui-search-price-filter > :nth-child(3)').click();
             cy.get('[aria-label="Ubicación"] > :nth-child(2) > .ui-search-link > .ui-search-filter-name').click();
-            cy.get('.ui-search-gallery-desktop').click(); //change products view
+            cy.get('.ui-search-gallery-desktop').click(); //Change products view
         });
 
         it.only('Help menu items selection',function(){
-            cy.visit('https://www.mercadolibre.com.ec/ayuda');
-            cy.get('[class="andes-list__item cx-list-item desktop  andes-list__item--height-row-medium andes-list__item-with-image"]').
-            each(($item) => {
-                if ($item.text().includes('Seguridad')) {
-                    console.log($item.text());
-                    console.log($item.click());
-                }
+            //Call the fixture
+            cy.fixture('index.json').then((locators) => {
+                cy.visit(locators.helpMenu);
+                cy.visit(locators.securityMenu);
+                cy.title().should('include', 'Seguridad');
+                cy.visit(locators.cellphoneStealHelp);
+                cy.title().should('include', '¿Qué hago si pierdo o roban mi celular?');
+                cy.get('.andes-form-control__field').type('cuenta {enter}');
             });
-            cy.visit('https://www.mercadolibre.com.ec/ayuda/Seguridad_663');
-            cy.title().should('include', 'Seguridad');
-            cy.visit('https://www.mercadolibre.com.ec/ayuda/robaron-mi-celular-tenia-app-mercado-pago_15349');
-            cy.title().should('include', '¿Qué hago si pierdo o roban mi celular?');
-            cy.get('.andes-form-control__field').type('cuenta {enter}');
         });
     });
 });
