@@ -7,14 +7,14 @@ orbs:
 jobs:
   cypress_tests:
       docker:
-        - image: 'node:latest'
+        - image: 'node:16-alpine3.11'
       steps:
         - checkout
         - run:
-            command: apt-get install xauth xvfb
-        - run:
+            name: Install cypress
             command: npm install cypress --save-dev
         - run:
+            name: Run tests
             command: npx cypress run
 
 workflows:
