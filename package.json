@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "tests": "cypress run --spec 'cypress/integration/test_mercado_libre.js'"
   },
   "devDependencies": {
     "cypress": "^8.2.0"
