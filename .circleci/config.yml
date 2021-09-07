@@ -7,5 +7,7 @@ orbs:
 workflows:
     example-workflow:
       jobs:
+        - cypress/install:
+            build: "npm run build"
         - cypress/run:
             record: true
