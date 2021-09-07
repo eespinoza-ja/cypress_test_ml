@@ -7,7 +7,7 @@ orbs:
 jobs:
   node_tests:
       docker:
-        - image: 'node:latest'
+        - image: 'node:16-alpine3.11'
           environment:
               TERM: xterm
       working_directory: ~/project
