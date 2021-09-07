@@ -16,11 +16,10 @@ jobs:
         - checkout
         - run: apt-get update #apk add xvfb xauth libxtst
         - run: apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+        - run: npm install cypress --save-dev
+        - run: npm install
         - run:
-            command: npm install cypress --save-dev
-        - run:
-            command: npm install
-        - run:
+            name: Run tests
             command: npm run tests
         - store_artifacts:
             path: cypress/videos
