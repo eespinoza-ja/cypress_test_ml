@@ -13,9 +13,6 @@ jobs:
       steps:
         - checkout
         - run:
-            name: Install cypress
-            command: npm install cypress --save-dev
-        - run:
             name: Run tests
             command: npx cypress run
         - store_artifacts:
