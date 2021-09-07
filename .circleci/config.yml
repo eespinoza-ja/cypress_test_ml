@@ -14,7 +14,7 @@ jobs:
         - checkout
         - run:
             name: Run tests
-            command: ./node_modules/.bin/cypress run
+            command: npm run cy:run --record --spec "cypress/integration/test_mercado_libre.js"
         - store_artifacts:
             path: cypress/videos
         - store_artifacts:
