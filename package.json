@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "cy:run": "cypress run"
+  },
   "devDependencies": {
     "cypress": "^8.2.0"
   }
