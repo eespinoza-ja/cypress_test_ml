@@ -14,7 +14,7 @@ jobs:
         - checkout
         - run:
             name: Run tests
-            command: npx cypress run
+            command: ./node_modules/.bin/cypress run
         - store_artifacts:
             path: cypress/videos
         - store_artifacts:
