@@ -1,10 +1,22 @@
 # This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: 2.1
 
-#orbs:
-#  node: circleci/node@4.7.0
+orbs:
+  node: circleci/node@4.7.0
 
 jobs:
+  node_tests:
+      docker:
+        - image: 'node:latest'
+      steps:
+        - checkout
+        - run:
+            command: npm install cypress --save-dev
+        - run:
+            command: npm install
+        - run:
+            command: npm run tests
+
   cypress_tests:
       docker:
         - image: cypress/base:8
@@ -34,7 +46,7 @@ jobs:
             command: npm install
         - run:
             name: Run tests
-            command: npm run tests        
+            command: npm run tests
         - run:
             name: Run tests1
             command: npm run cy:run --record --spec "cypress/integration/test_mercado_libre.js"
@@ -44,6 +56,9 @@ jobs:
             path: cypress/screenshots
 
 workflows:
-  build-test:
+  node-test:
+      jobs:
+        - node_tests
+  cypress-test:
     jobs:
       - cypress_tests
