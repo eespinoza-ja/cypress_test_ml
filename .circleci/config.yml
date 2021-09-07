@@ -2,12 +2,20 @@
 version: 2.1
 
 orbs:
-  cypress: cypress-io/cypress@1.29.0
+  node: circleci/node@4.7.0
+
+jobs:
+  cypress_tests:
+      docker:
+        - image: 'node:latest'
+      steps:
+        - checkout
+        - run:
+            command: npm install cypress --save-dev
+        - run:
+            command: npx cypress run
 
 workflows:
-    example-workflow:
-      jobs:
-        - cypress/install:
-            build: "npm run build"
-        - cypress/run:
-            record: true
+  build-test:
+    jobs:
+      - cypress_tests
