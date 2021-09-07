@@ -14,7 +14,7 @@ jobs:
       parallelism: 1
       steps:
         - checkout
-        - run: apk add xvfb xauth libxtst libasound2-dev
+        - run: apk add xvfb xauth libxtst
         - run:
             command: npm install cypress --save-dev
         - run:
@@ -47,6 +47,8 @@ jobs:
             paths:
               - ~/.npm
               - ~/.cache
+        - run:
+            command: npm install cypress --save-dev
         - run:
             command: npm install
         - run:
