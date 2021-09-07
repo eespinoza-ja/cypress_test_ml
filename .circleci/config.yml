@@ -5,7 +5,7 @@ orbs:
   node: circleci/node@4.7.0
 
 jobs:
-  node_tests:
+  cypress_tests:
       docker:
         - image: 'node:16-bullseye-slim'
           environment:
@@ -22,50 +22,12 @@ jobs:
             command: npm install
         - run:
             command: npm run tests
-
-  cypress_tests:
-      docker:
-        - image: cypress/base:8
-          environment:
-            TERM: xterm
-      working_directory: ~/project
-      parallelism: 1
-      steps:
-        - checkout
-        - run:
-            command: pwd
-        - run:
-            command: ls -l
-        - restore_cache:
-            keys:
-              - v2-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
-              - v2-deps-{{ .Branch }}-
-              - v2-deps-
-        #- run: npm ci
-        - save_cache:
-            key: 
-              v2-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
-            paths:
-              - ~/.npm
-              - ~/.cache
-        - run: apk add --update nodejs npm
-        - run:
-            command: yarn install
-        - run:
-            name: Run tests
-            command: npm run tests
-        - run:
-            name: Run tests1
-            command: npm run cy:run --record --spec "cypress/integration/test_mercado_libre.js"
         - store_artifacts:
             path: cypress/videos
         - store_artifacts:
             path: cypress/screenshots
 
 workflows:
-  node-test:
-      jobs:
-        - node_tests
   cypress-test:
     jobs:
       - cypress_tests
