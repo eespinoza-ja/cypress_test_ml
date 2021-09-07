@@ -7,14 +7,15 @@ orbs:
 jobs:
   node_tests:
       docker:
-        - image: 'node:16-alpine3.11'
+        - image: 'node:16-bullseye-slim'
           environment:
               TERM: xterm
       working_directory: ~/project
       parallelism: 1
       steps:
         - checkout
-        - run: apk add xvfb xauth libxtst libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2
+        - run: apt-get update #apk add xvfb xauth libxtst
+        - run: apt-get install libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
         - run:
             command: npm install cypress --save-dev
         - run:
@@ -48,9 +49,7 @@ jobs:
               - ~/.npm
               - ~/.cache
         - run:
-            command: npm install cypress --save-dev
-        - run:
-            command: npm install
+            command: yarn install
         - run:
             name: Run tests
             command: npm run tests
