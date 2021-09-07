@@ -31,6 +31,8 @@ jobs:
               - ~/.npm
               - ~/.cache
         - run:
+            command: npm install
+        - run:
             name: Run tests
             command: npm run tests        
         - run:
